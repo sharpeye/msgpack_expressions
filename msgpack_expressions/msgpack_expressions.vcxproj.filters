@@ -24,7 +24,10 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\msgpack_expressions\msgpack_expressions.h">
+    <ClInclude Include="include\msgpack_expressions\pack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\msgpack_expressions\expressions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

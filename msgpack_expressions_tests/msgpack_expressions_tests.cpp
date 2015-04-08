@@ -1,79 +1,22 @@
 #include "stdafx.h"
 #include <iostream>
-#include <msgpack_expressions/msgpack_expressions.h>
+#include <msgpack_expressions/pack.h>
 
-using namespace sharpeye::msgpack_expressions;
-
-template< typename T >
-static void pack( std::ostream & out, T const & value )
+int wmain( int argc, wchar_t * argv[] )
 {
-	out << value;
-}
+	using namespace sharpeye::msgpack_expressions;
 
-static void pack( std::ostream & out, Array const & array, unsigned n )
-{
-	out << "[";
-}
+	msgpack::sbuffer buffer;
+	msgpack::packer< msgpack::sbuffer > p{ buffer };
+	p << array()
+		( map()( "cool", array()( 1 )( 2 ) ) )
+		( 3 )
+		( 4 );
 
-static void pack( std::ostream & out, Map const & map, unsigned n )
-{
-	out << "{\n";
-}
+	msgpack::unpacked u;
+	msgpack::unpack( &u, buffer.data(), buffer.size() );
 
-template< typename T, typename P >
-static void pack( std::ostream & out, array_node< T, P > const & node, unsigned n )
-{
-	pack( out, node.parent, n + 1 );
-	out << " ";
-	pack( out, node.value );
-	if( n )
-	{
-		out << ", ";
-	}
-}
-
-template< typename T, typename P >
-static std::ostream & operator << ( std::ostream & out, array_node< T, P > const & node )
-{
-	pack( out, node, 0 );
-
-	out << " ]";
-
-	return out;
-}
-
-template< typename K, typename V, typename P >
-static void pack( std::ostream & out, map_node< K, V, P > const & node, unsigned n )
-{
-	pack( out, node.parent, n + 1 );
-	out << " ";
-	pack( out, node.key );
-	out << ": ";
-	pack( out, node.value );
-	if( n )
-	{
-		out << ",\n";
-	}
-}
-
-template< typename K, typename V, typename P >
-static std::ostream & operator << ( std::ostream & out, map_node< K, V, P > const & node )
-{
-	pack( out, node, 0 );
-
-	out << "\n}";
-
-	return out;
-}
-
-int _tmain(int argc, _TCHAR* argv[])
-{
-	std::cout << array()( 1 )( "cool" )( 3.1 ) << std::endl;
-
-	std::cout << map()
-		( "key1", array()( 1 ) )
-		( "cool", 3.1 ) 
-		<< std::endl;
+	std::cout << u.get() << std::endl;
 
 	return 0;
 }

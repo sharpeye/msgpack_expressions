@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "msgpack_expressions", "msgpack_expressions\msgpack_expressions.vcxproj", "{054B05D0-2B3D-4EC3-AA12-BEFB02EADEA7}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "msgpack_expressions_tests", "msgpack_expressions_tests\msgpack_expressions_tests.vcxproj", "{AAC5D2D7-57F4-429F-97B8-6B9FB93803E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{054B05D0-2B3D-4EC3-AA12-BEFB02EADEA7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{054B05D0-2B3D-4EC3-AA12-BEFB02EADEA7}.Debug|Win32.Build.0 = Debug|Win32
+		{054B05D0-2B3D-4EC3-AA12-BEFB02EADEA7}.Release|Win32.ActiveCfg = Release|Win32
+		{054B05D0-2B3D-4EC3-AA12-BEFB02EADEA7}.Release|Win32.Build.0 = Release|Win32
+		{AAC5D2D7-57F4-429F-97B8-6B9FB93803E5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AAC5D2D7-57F4-429F-97B8-6B9FB93803E5}.Debug|Win32.Build.0 = Debug|Win32
+		{AAC5D2D7-57F4-429F-97B8-6B9FB93803E5}.Release|Win32.ActiveCfg = Release|Win32
+		{AAC5D2D7-57F4-429F-97B8-6B9FB93803E5}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

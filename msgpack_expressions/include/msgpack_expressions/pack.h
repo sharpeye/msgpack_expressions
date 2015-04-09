@@ -6,8 +6,6 @@ namespace sharpeye
 {
 	namespace msgpack_expressions
 	{
-		namespace et = msgpack_expressions;
-
 		template< typename S, typename T >
 		inline void pack( msgpack::packer< S > & p, T const & value )
 		{

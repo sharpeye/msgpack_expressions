@@ -114,20 +114,20 @@ namespace sharpeye
 		struct Array : array_node_base< Array >
 		{
 			explicit Array( unsigned n = 0 )
-				: size{ n }
+				: extra_size{ n }
 			{}
 
-			unsigned size;
+			unsigned extra_size;
 
 		}; // Array
 
 		struct Map : map_node_base< Map >
 		{
 			explicit Map( unsigned n = 0 )
-				: size{ n }
+				: extra_size{ n }
 			{}
 
-			unsigned size;
+			unsigned extra_size;
 
 		}; // Map
 

@@ -15,7 +15,7 @@ namespace sharpeye
 		template< typename S >
 		inline bool pack( msgpack::packer< S > & p, Array const & map, unsigned n )
 		{
-			p.pack_array( map.size + n );
+			p.pack_array( map.extra_size + n );
 
 			return true;
 		}
@@ -23,7 +23,7 @@ namespace sharpeye
 		template< typename S >
 		inline bool pack( msgpack::packer< S > & p, Map const & map, unsigned n )
 		{
-			p.pack_map( map.size + n );
+			p.pack_map( map.extra_size + n );
 
 			return true;
 		}

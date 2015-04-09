@@ -11,12 +11,23 @@ namespace sharpeye
 		struct map_node;
 
 		template< typename B >
+		struct optional_array_node;
+
+		template< typename B >
+		struct optional_map_node;
+
+		template< typename B >
 		struct array_node_base
 		{
 			template< typename T >
 			decltype(auto) operator ()( T const & value ) const
 			{
 				return array_node< T, B >{ value, static_cast< B const & >( *this ) };
+			}
+
+			optional_array_node< B > optional( bool cond ) const
+			{
+				return optional_array_node< B >{ cond, static_cast< const B& >( *this ) };
 			}
 
 		}; // array_node_base<>
@@ -30,7 +41,47 @@ namespace sharpeye
 				return map_node< K, V, B >{ key, value, static_cast< B const & >( *this ) };
 			}
 
+			optional_map_node< B > optional( bool cond ) const
+			{
+				return optional_map_node< B >{ cond, static_cast<const B&>( *this ) };
+			}
+
 		}; // map_node_base<>
+
+		template< typename P >
+		struct optional_node_base
+		{
+			bool cond;
+			const P& parent;
+
+			explicit optional_node_base( bool cond, const P& parent )
+				: cond{ cond }
+				, parent{ parent }
+			{}
+
+		}; // optional_node_base<>
+
+		template< typename P >
+		struct optional_array_node
+			: array_node_base< optional_array_node< P > >
+			, optional_node_base< P >
+		{
+			explicit optional_array_node( bool cond, const P& parent )
+				: optional_node_base{ cond, parent }
+			{}
+
+		}; // optional_array_node<>
+
+		template< typename P >
+		struct optional_map_node
+			: map_node_base< optional_map_node< P > >
+			, optional_node_base < P >
+		{
+			explicit optional_map_node( bool cond, const P& parent )
+				: optional_node_base{ cond, parent }
+			{}
+
+		}; // optional_map_node<>
 
 		template< typename T, typename P >
 		struct array_node : array_node_base< array_node< T, P > >

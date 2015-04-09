@@ -1,6 +1,6 @@
 #pragma once
-#include <msgpack_expressions/expressions.h>
 #include <msgpack.hpp>
+#include <msgpack_expressions/expressions.h>
 
 namespace sharpeye
 {
@@ -15,30 +15,59 @@ namespace sharpeye
 		}
 
 		template< typename S >
-		inline void pack( msgpack::packer< S > & p, Array const & map, unsigned n )
+		inline bool pack( msgpack::packer< S > & p, Array const & map, unsigned n )
 		{
 			p.pack_array( map.size + n );
+
+			return true;
 		}
 
 		template< typename S >
-		inline void pack( msgpack::packer< S > & p, Map const & map, unsigned n )
+		inline bool pack( msgpack::packer< S > & p, Map const & map, unsigned n )
 		{
 			p.pack_map( map.size + n );
+
+			return true;
+		}
+
+		template< typename S, typename P >
+		bool pack( msgpack::packer< S >& out, const optional_node_base< P >& opt, unsigned n )
+		{
+			if( !opt.cond )
+			{
+				pack( out, opt.parent, 0 );
+
+				return false;
+			}
+
+			return pack( out, opt.parent, n );
 		}
 
 		template< typename S, typename K, typename V, typename P >
-		inline void pack( msgpack::packer< S > & p, map_node< K, V, P > const & node, unsigned n )
+		inline bool pack( msgpack::packer< S > & p, map_node< K, V, P > const & node, unsigned n )
 		{
-			pack( p, node.parent, n + 1 );
-			(pack)( p, node.key );
-			(pack)( p, node.value );
+			if( pack( p, node.parent, n + 1 ) )
+			{
+				(pack)( p, node.key );
+				(pack)( p, node.value );
+
+				return true;
+			}
+
+			return false;
 		}
 
 		template< typename S, typename T, typename P >
-		inline void pack( msgpack::packer< S > & p, array_node< T, P > const & node, unsigned n )
+		inline bool pack( msgpack::packer< S > & p, array_node< T, P > const & node, unsigned n )
 		{
-			pack( p, node.parent, n + 1 );
-			(pack)( p, node.value );
+			if( pack( p, node.parent, n + 1 ) )
+			{
+				(pack)( p, node.value );
+
+				return true;
+			}
+
+			return false;
 		}
 
 		template< typename S, typename K, typename V, typename P >

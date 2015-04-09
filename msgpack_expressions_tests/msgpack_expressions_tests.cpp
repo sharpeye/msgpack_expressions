@@ -9,9 +9,16 @@ int wmain( int argc, wchar_t * argv[] )
 	msgpack::sbuffer buffer;
 	msgpack::packer< msgpack::sbuffer > p{ buffer };
 	p << array()
-		( map()( "cool", array()( 1 )( 2 ) ) )
-		( 3 )
-		( 4 );
+		( 1 )
+		( 2 )
+		( map()( "k", 3 ) )
+		( 4 )
+			.optional( false )
+			( 5 )
+			( map()( "k2", 42 )
+				.optional( true )
+					( "k3", 100500 ) )
+			;
 
 	msgpack::unpacked u;
 	msgpack::unpack( &u, buffer.data(), buffer.size() );
